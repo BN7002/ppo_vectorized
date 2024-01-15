@@ -133,7 +133,7 @@ class Agent:
         print('... loading models ...')
         self.actor.load_checkpoint()
         self.critic.load_checkpoint()
-
+    
     def choose_action(self, observation):
         #print("observation: ", observation)
         state = T.tensor(np.array([observation]), dtype=T.float).to(self.actor.device)
@@ -143,6 +143,7 @@ class Agent:
         action = dist.sample()
 
         probs = T.squeeze(dist.log_prob(action)).item()
+        # Discrete action here!!
         action = T.squeeze(action).item()
         value = T.squeeze(value).item()
 
